@@ -4,14 +4,12 @@ import _ from 'lodash';
 import './style.css';
 
 export default function App() {
-  const array = [];
   const [score, setScore] = useState(0);
   const [initialArray, setInitialArray] = useState([]);
   const [round, setRound] = useState(0);
   const [clickCounter, setClickCounter] = useState(0);
   const [complete, setComplete] = useState(false);
   const [event, setEvent] = useState([]);
-  const [debuggMode, setDebuggMode] = useState('False');
   const newArray = [1, 2, 4, 4, 5, 6, 7, 8, 9];
 
   function timeout(ms) {
@@ -19,11 +17,9 @@ export default function App() {
   }
 
   const removeColor = async (arr) => {
-    debuggMode === 'True' && console.log('adding');
     let newArr = [...arr];
     let tile = newArr.shift();
     while (tile) {
-      debuggMode === 'True' && console.log(tile);
       await timeout(300);
       tile.classList.add('bg-red-500');
       tile = newArr.shift();
@@ -33,8 +29,6 @@ export default function App() {
 
   const handleStartClick = async (e, k) => {
     if (!clickCounter > 10) return;
-
-    debuggMode === 'True' && console.log(clickCounter, round);
 
     if (round > 0 && clickCounter < round) {
       e.target.classList.add('bg-red-500');
@@ -66,39 +60,14 @@ export default function App() {
 
   const startRound = async (round) => {
     let i = 0;
-    debuggMode === 'True' && console.log('round started', i, round);
     let arr = [];
     while (i < round) {
       let random = (Math.ceil(Math.random(i + 1) * 9) - 1).toString();
-      debuggMode === 'True' && console.log(random);
       arr.push(random);
       i++;
     }
     setInitialArray(arr);
   };
-
-  // useEffect(() => {
-  //   if (event !== null) {
-  //     setFinalArray([...event]);
-  //   }
-  // }, [event]);
-
-  // useEffect(() => {
-  //   if (finalArray.length === 0) return;
-  //   if (finalArray.length === round) {
-  //     if (_.isEqual(initialArray, finalArray)) {
-  //       setScore(score + 1);
-  //       setFinalArray([]);
-  //       setInitialArray([]);
-  //       setRound(round + 1);
-  //       setClickCounter(0)
-  //       setEvent([])
-  //     } else {
-  //       setComplete(true);
-  //     }
-  //   }
-  //   console.log(finalArray, initialArray);
-  // }, [finalArray]);
 
   useEffect(() => {
     if (event.length === 0) return;
@@ -115,13 +84,10 @@ export default function App() {
     }
 
     let temp = initialArray.slice(0, clickCounter);
-    debuggMode === 'True' && console.log(temp, initialArray, event);
     if (!_.isEqual(event, temp)) {
       setComplete(true);
       resetGame('failed');
     }
-
-    debuggMode === 'True' && console.log(event, initialArray);
   }, [event]);
 
   useEffect(() => {
@@ -189,15 +155,7 @@ export default function App() {
 
       <p className="flex items-center justify-center mt-5">{score}</p>
 
-      <button
-        onClick={() => {
-          setDebuggMode(debuggMode === 'False' ? 'True' : 'False');
-          console.log(debuggMode);
-        }}
-        className="bg-red-800 rounded"
-      >
-        Toggle Debug Mode <span className="text-white">{debuggMode}</span>
-      </button>
+     
     </div>
   );
 }
