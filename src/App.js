@@ -112,19 +112,33 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col space-y-3 p-2">
-      <div className="grid grid-cols-3 w-full">
+    <div className="flex flex-col space-y-3 p-4 justify-center item-center h-screen w-screen bg-blue-300">
+      <h1 className="w-full text-center font-semibold">
+        Welcome to Tile Memorizing game
+      </h1>
+      <div className="grid grid-cols-3 w-full p-6 gap-1 ">
         {newArray.map((e, key) => {
           return (
             <div
               onClick={(e) => handleStartClick(e, key)}
               key={key}
               id={key}
-              className={`h-20 w-20 w-full border`}
+              className={`h-20 w-20 w-full border border-black`}
             ></div>
           );
         })}
       </div>
+
+      {complete && (
+        <div>
+          <h1>Game over score below</h1>
+        </div>
+      )}
+
+      <p className="flex items-center justify-center mt-5">Score: {score}</p>
+      <h1>
+        Round = {round} / clicks = {clickCounter}
+      </h1>
 
       <button
         onClick={() => {
@@ -143,19 +157,9 @@ export default function App() {
         Reset
       </button>
 
-      {complete && (
-        <div>
-          <h1>Game over score below</h1>
-        </div>
-      )}
-
-      <h1>
-        Round = {round} / clicks = {clickCounter}
-      </h1>
-
-      <p className="flex items-center justify-center mt-5">{score}</p>
-
      
+
+      
     </div>
   );
 }
