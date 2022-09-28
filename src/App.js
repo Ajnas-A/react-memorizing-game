@@ -10,22 +10,46 @@ export default function App() {
   const [clickCounter, setClickCounter] = useState(0);
   const [complete, setComplete] = useState(false);
   const [event, setEvent] = useState([]);
+  const [highScore, setHighScore] = useState(0);
+
+  const getHighScore = () => {
+    const score = localStorage.getItem('highscore');
+    return score;
+  };
+
+  const checkHighScore = (score) => {
+    const prevHigh = getHighScore();
+    if (prevHigh < score) {
+      localStorage.setItem('highscore', score);
+      setHighScore(score);
+    }
+  };
+
+  useEffect(() => {
+    let score = getHighScore();
+    if (!score) {
+      setHighScore(0);
+    } else {
+      setHighScore(score);
+    }
+  }, []);
+
   const newArray = [1, 2, 4, 4, 5, 6, 7, 8, 9];
 
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  const removeColor = async (arr) => {
-    let newArr = [...arr];
-    let tile = newArr.shift();
-    while (tile) {
-      await timeout(300);
-      tile.classList.add('bg-red-500');
-      tile = newArr.shift();
-    }
-    return null;
-  };
+  // const removeColor = async (arr) => {
+  //   let newArr = [...arr];
+  //   let tile = newArr.shift();
+  //   while (tile) {
+  //     await timeout(300);
+  //     tile.classList.add('bg-red-500');
+  //     tile = newArr.shift();
+  //   }
+  //   return null;
+  // };
 
   const handleStartClick = async (e, k) => {
     if (!clickCounter > 10) return;
@@ -40,12 +64,13 @@ export default function App() {
   };
 
   const resetGame = (para) => {
+    checkHighScore(score);
     if (para === 'button') {
       setRound(0);
       setComplete(false);
+      setScore(0);
     }
 
-    setScore(0);
     setInitialArray([]);
     setClickCounter(0);
     setEvent([]);
@@ -79,7 +104,7 @@ export default function App() {
         setRound(round + 1);
         setClickCounter(0);
         setEvent([]);
-      }else{
+      } else {
         setComplete(true);
         resetGame('failed');
       }
@@ -110,8 +135,9 @@ export default function App() {
   }, [round]);
 
   const handleButtonClick = () => {
-    if (round >= 3) return setComplete(true);
-    setRound(round + 1);
+    if (round < 1) {
+      setRound(round + 1);
+    }
   };
 
   return (
@@ -139,15 +165,19 @@ export default function App() {
       )}
 
       <p className="flex items-center justify-center mt-5">Score: {score}</p>
+      <p className="flex items-center justify-center mt-5">
+        HighScore: {highScore}
+      </p>
       <h1>
         Round = {round} / clicks = {clickCounter}
       </h1>
 
       <button
+        disabled={round < 0 ? true : false}
         onClick={() => {
           handleButtonClick();
         }}
-        className="bg-green-300 p-2 rounded mt-5 flex items-center justify-center w-full"
+        className={` disabled:bg-red-500 bg-green-300 p-2 rounded mt-5 flex items-center justify-center w-full`}
       >
         Start
       </button>
@@ -159,10 +189,6 @@ export default function App() {
       >
         Reset
       </button>
-
-     
-
-      
     </div>
   );
 }
