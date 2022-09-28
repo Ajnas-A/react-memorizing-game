@@ -110,8 +110,11 @@ export default function App() {
         setRound(round + 1);
         setClickCounter(0);
         setEvent([]);
+      }else{
+        setComplete(true);
+        resetGame('failed');
       }
-      return;
+      
     }
 
     let temp = initialArray.slice(0, clickCounter);
