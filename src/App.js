@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Counter from './Components/Counter';
 import _ from 'lodash';
 import './style.css';
 
