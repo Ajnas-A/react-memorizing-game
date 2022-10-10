@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import _ from 'lodash';
-import './style.css';
+import React, { useState, useEffect, useRef } from "react";
+import _ from "lodash";
+import "./style.css";
 
 export default function App() {
   const [score, setScore] = useState(0);
@@ -12,25 +12,22 @@ export default function App() {
   const [highScore, setHighScore] = useState(0);
 
   const getHighScore = () => {
-    const score = localStorage.getItem('highscore');
+    const score = localStorage.getItem("highscore");
     return score;
   };
 
   const checkHighScore = (score) => {
     const prevHigh = getHighScore();
     if (prevHigh < score) {
-      localStorage.setItem('highscore', score);
+      localStorage.setItem("highscore", score);
       setHighScore(score);
     }
   };
 
   useEffect(() => {
     let score = getHighScore();
-    if (!score) {
-      setHighScore(0);
-    } else {
-      setHighScore(score);
-    }
+    if (!score) return setHighScore(0);
+    setHighScore(score);
   }, []);
 
   const newArray = [1, 2, 4, 4, 5, 6, 7, 8, 9];
@@ -54,17 +51,17 @@ export default function App() {
     if (!clickCounter > 10) return;
 
     if (round > 0 && clickCounter < round) {
-      e.target.classList.add('bg-red-500');
+      e.target.classList.add("bg-red-500");
       await timeout(500);
-      e.target.classList.remove('bg-red-500');
+      e.target.classList.remove("bg-red-500");
       setClickCounter(clickCounter + 1);
-      setEvent([...event, e.target.getAttribute('id')]);
+      setEvent([...event, e.target.getAttribute("id")]);
     }
   };
 
   const resetGame = (para) => {
     checkHighScore(score);
-    if (para === 'button') {
+    if (para === "button") {
       setRound(0);
       setComplete(false);
       setScore(0);
@@ -77,9 +74,9 @@ export default function App() {
 
   const lightUpSquare = async (square) => {
     const doc = document.getElementById(square);
-    doc.classList.add('bg-red-500');
+    doc.classList.add("bg-red-500");
     await timeout(500);
-    doc.classList.remove('bg-red-500');
+    doc.classList.remove("bg-red-500");
   };
 
   const startRound = async (round) => {
@@ -105,7 +102,7 @@ export default function App() {
         setEvent([]);
       } else {
         setComplete(true);
-        resetGame('failed');
+        resetGame("failed");
       }
       return;
     }
@@ -113,7 +110,7 @@ export default function App() {
     let temp = initialArray.slice(0, clickCounter);
     if (!_.isEqual(event, temp)) {
       setComplete(true);
-      resetGame('failed');
+      resetGame("failed");
     }
   }, [event]);
 
@@ -140,54 +137,56 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col space-y-3 p-4 justify-center item-center h-screen w-screen bg-blue-300">
-      <h1 className="w-full text-center font-semibold">
-        Welcome to Tile Memorizing game
-      </h1>
-      <div className="grid grid-cols-3 w-full p-6 gap-1 ">
-        {newArray.map((e, key) => {
-          return (
-            <div
-              onClick={(e) => handleStartClick(e, key)}
-              key={key}
-              id={key}
-              className={`h-20 w-20 w-full border border-black`}
-            ></div>
-          );
-        })}
-      </div>
-
-      {complete && (
-        <div>
-          <h1>Game over score below</h1>
+    <div className="h-screen w-screen flex items-center justify-center bg-blue-300">
+      <div className="flex flex-col space-y-3 p-4 justify-center item-center h-screen w-[800px] ">
+        <h1 className="w-full text-center font-semibold">
+          Welcome to Tile Memorizing game
+        </h1>
+        <div className="grid grid-cols-3 w-full p-6 gap-1  shadow-2xl rounded sm:h-[350px]   ">
+          {newArray.map((e, key) => {
+            return (
+              <div
+                onClick={(e) => handleStartClick(e, key)}
+                key={key}
+                id={key}
+                className={`h-20 sm:h-full  w-full border border-blue-400  rounded`}
+              ></div>
+            );
+          })}
         </div>
-      )}
 
-      <p className="flex items-center justify-center mt-5">Score: {score}</p>
-      <p className="flex items-center justify-center mt-5">
-        HighScore: {highScore}
-      </p>
-      <h1>
-        Round = {round} / clicks = {clickCounter}
-      </h1>
+        {complete && (
+          <div>
+            <h1>Game over score below</h1>
+          </div>
+        )}
 
-      <button
-        disabled={round < 0 ? true : false}
-        onClick={() => {
-          handleButtonClick();
-        }}
-        className={` disabled:bg-red-500 bg-green-300 p-2 rounded mt-5 flex items-center justify-center w-full`}
-      >
-        Start
-      </button>
-      <button
-        className="bg-red-500 w-full p-2 rounded"
-        onClick={() => {
-          resetGame('button');
-        }}
-      >
-        Reset
-      </button>
+        <p className="flex items-center justify-center mt-5">Score: {score}</p>
+        <p className="flex items-center justify-center mt-5">
+          HighScore: {highScore}
+        </p>
+        <h1>
+          Round = {round} / clicks = {clickCounter}
+        </h1>
+
+        <button
+          disabled={round < 0 ? true : false}
+          onClick={() => {
+            handleButtonClick();
+          }}
+          className={` disabled:bg-red-500 bg-green-300 p-2 rounded mt-5 flex items-center justify-center w-full shadow-lg`}
+        >
+          Start
+        </button>
+        <button
+          className="bg-red-500 w-full p-2 rounded shadow-lg"
+          onClick={() => {
+            resetGame("button");
+          }}
+        >
+          Reset
+        </button>
+      </div>
     </div>
   );
 }

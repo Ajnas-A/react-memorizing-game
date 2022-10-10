@@ -2,7 +2,7 @@
   "name": "memorize-game",
   "version": "0.0.0",
   "private": true,
-  "homepage": "https://ajnas-a.github.io",
+  "homepage": "https://ajnas-a.github.io/react-memorizing-game",
   "dependencies": {
     "lodash": "^4.17.21",
     "react": "^18.2.0",
