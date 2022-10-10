@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/react-memorizing-game/static/css/main.bcf9a7e2.css",
-    "main.js": "/react-memorizing-game/static/js/main.2f9f3eac.js",
+    "main.css": "/react-memorizing-game/static/css/main.42f2cd81.css",
+    "main.js": "/react-memorizing-game/static/js/main.844714cf.js",
     "index.html": "/react-memorizing-game/index.html",
-    "main.bcf9a7e2.css.map": "/react-memorizing-game/static/css/main.bcf9a7e2.css.map",
-    "main.2f9f3eac.js.map": "/react-memorizing-game/static/js/main.2f9f3eac.js.map"
+    "main.42f2cd81.css.map": "/react-memorizing-game/static/css/main.42f2cd81.css.map",
+    "main.844714cf.js.map": "/react-memorizing-game/static/js/main.844714cf.js.map"
   },
   "entrypoints": [
-    "static/css/main.bcf9a7e2.css",
-    "static/js/main.2f9f3eac.js"
+    "static/css/main.42f2cd81.css",
+    "static/js/main.844714cf.js"
   ]
 }
